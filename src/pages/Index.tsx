@@ -78,7 +78,7 @@ const Index = () => {
           </div>
           <ul className="flex gap-6">
             <li>
-              <a href="#" className="font-medium hover:text-accent transition-colors">
+              <a href="/login" className="font-medium hover:text-accent transition-colors">
                 Login
               </a>
             </li>
