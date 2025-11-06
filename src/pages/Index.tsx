@@ -16,7 +16,7 @@ const Index = () => {
       name: "Droupadi Murmu",
       position: "President of India",
       description: "The first tribal woman to serve as President of India, upholding the nation's democratic values.",
-      image: "https://wallpapercave.com/wp/wp11812099.jpg"
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52Qh-aMxMPhodGWAG_mFpL9ny3bgw5E8B_g&s"
     },
     {
       name: "Shri Amit Shah",
