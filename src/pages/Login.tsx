@@ -107,7 +107,7 @@ const Login = () => {
           </form>
 
           <Button
-            onClick={() => navigate('/admin-login')}
+            onClick={() => navigate('/admin/login')}
             className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white font-semibold py-6 text-lg"
           >
             Enter as Admin
