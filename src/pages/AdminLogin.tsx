@@ -10,11 +10,10 @@ import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Eye, EyeOff } from 'lucide-react';
 
 const AdminLogin = () => {
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { signIn, user } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -48,14 +47,20 @@ const AdminLogin = () => {
       if (password !== 'admin@123') {
         toast({
           title: "Invalid Password",
-          description: "Incorrect admin password",
+          description: "Incorrect admin password. Please try again.",
           variant: "destructive",
         });
         setLoading(false);
         return;
       }
 
-      const { data, error } = await signIn(email, password);
+      // Use hardcoded admin email for internal authentication
+      const adminEmail = 'admin@issuedesk.gov.in';
+      
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: adminEmail,
+        password: password,
+      });
       
       if (error) {
         throw error;
@@ -111,20 +116,7 @@ const AdminLogin = () => {
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-white">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-white/20 border-white/30 text-white placeholder:text-white/60"
-                placeholder="admin@example.com"
-                required
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">Password</Label>
+              <Label htmlFor="password" className="text-white">Admin Password</Label>
               <div className="relative">
                 <Input
                   id="password"
