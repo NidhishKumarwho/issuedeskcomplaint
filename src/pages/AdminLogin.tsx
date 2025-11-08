@@ -108,11 +108,13 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-gradient-to-t from-[#0f2027] via-[#203a43] to-[#2c5364]">
       <AnimatedBackground />
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-lg p-8 shadow-2xl border border-white/20">
-          <h2 className="text-3xl font-bold text-white text-center mb-8">Admin Login</h2>
+      
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
+        <div className="w-full max-w-md bg-white/10 backdrop-blur-lg rounded-2xl p-8 shadow-2xl">
+          <h2 className="text-3xl font-bold text-white text-center mb-2">Admin Login</h2>
+          <p className="text-center text-white/80 mb-8 text-sm">Enter your admin password to continue</p>
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
@@ -123,14 +125,14 @@ const AdminLogin = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white/20 border-white/30 text-white placeholder:text-white/60 pr-10"
+                  className="w-full bg-white/20 border-none text-white placeholder:text-gray-300 pr-10"
                   placeholder="Enter admin password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/80 hover:text-white"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-gray-300"
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -140,21 +142,21 @@ const AdminLogin = () => {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-green-600 hover:bg-green-700 text-white"
+              className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-6 text-lg"
             >
               {loading ? 'Logging in...' : 'Login as Admin'}
             </Button>
-
-            <div className="text-center">
-              <button
-                type="button"
-                onClick={() => navigate('/login')}
-                className="text-cyan-400 hover:text-cyan-300 text-sm underline"
-              >
-                Back to Citizen Login
-              </button>
-            </div>
           </form>
+
+          <p className="text-center text-white mt-6 text-sm">
+            Not an admin?{' '}
+            <button
+              onClick={() => navigate('/login')}
+              className="text-cyan-300 underline hover:text-cyan-200"
+            >
+              Back to Citizen Login
+            </button>
+          </p>
         </div>
       </div>
     </div>
