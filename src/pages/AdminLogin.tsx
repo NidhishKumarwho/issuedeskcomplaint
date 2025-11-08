@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -148,15 +148,20 @@ const AdminLogin = () => {
             </Button>
           </form>
 
-          <p className="text-center text-white mt-6 text-sm">
-            Not an admin?{' '}
-            <button
-              onClick={() => navigate('/login')}
-              className="text-cyan-300 underline hover:text-cyan-200"
-            >
-              Back to Citizen Login
-            </button>
-          </p>
+          <div className="text-center text-white mt-6 text-sm space-y-2">
+            <p>
+              Don't have an admin account?{' '}
+              <Link to="/admin/signup" className="text-cyan-300 underline hover:text-cyan-200">
+                Register here
+              </Link>
+            </p>
+            <p>
+              Not an admin?{' '}
+              <Link to="/login" className="text-cyan-300 underline hover:text-cyan-200">
+                Back to Citizen Login
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
