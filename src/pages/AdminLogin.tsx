@@ -44,10 +44,26 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
+      // Validate admin password
+      if (password !== 'admin@123') {
+        toast({
+          title: "Invalid Password",
+          description: "Incorrect admin password",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+
       const { data, error } = await signIn(email, password);
       
-      if (error) throw error;
-      if (!data.user) throw new Error('No user data returned');
+      if (error) {
+        throw error;
+      }
+      
+      if (!data.user) {
+        throw new Error('No user data returned');
+      }
 
       // Check if user has admin role
       const { data: roleData, error: roleError } = await supabase
@@ -64,14 +80,21 @@ const AdminLogin = () => {
           description: "You don't have admin privileges",
           variant: "destructive",
         });
+        setLoading(false);
         return;
       }
 
+      toast({
+        title: "Login Successful",
+        description: "Welcome, Admin!",
+      });
+      
       navigate('/admin/dashboard');
     } catch (error: any) {
+      console.error('Admin login error:', error);
       toast({
         title: "Login failed",
-        description: error.message,
+        description: error.message || 'An error occurred during login',
         variant: "destructive",
       });
     } finally {
