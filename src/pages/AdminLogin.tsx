@@ -10,6 +10,7 @@ import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Eye, EyeOff } from 'lucide-react';
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -43,22 +44,8 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      // Validate admin password
-      if (password !== 'admin@123') {
-        toast({
-          title: "Invalid Password",
-          description: "Incorrect admin password. Please try again.",
-          variant: "destructive",
-        });
-        setLoading(false);
-        return;
-      }
-
-      // Use hardcoded admin email for internal authentication
-      const adminEmail = 'admin@issuedesk.gov.in';
-      
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: adminEmail,
+        email: email,
         password: password,
       });
       
@@ -118,7 +105,20 @@ const AdminLogin = () => {
           
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-white">Admin Password</Label>
+              <Label htmlFor="email" className="text-white">Admin Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full bg-white/20 border-none text-white placeholder:text-gray-300"
+                placeholder="admin@issuedesk.gov.in"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-white">Password</Label>
               <div className="relative">
                 <Input
                   id="password"
@@ -126,7 +126,7 @@ const AdminLogin = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full bg-white/20 border-none text-white placeholder:text-gray-300 pr-10"
-                  placeholder="Enter admin password"
+                  placeholder="Enter your password"
                   required
                 />
                 <button
