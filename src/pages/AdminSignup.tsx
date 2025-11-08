@@ -53,37 +53,22 @@ const AdminSignup = () => {
       const validatedData = adminSignupSchema.parse(formData);
       setLoading(true);
 
-      const redirectUrl = `${window.location.origin}/admin/dashboard`;
-
-      const { data, error } = await supabase.auth.signUp({
-        email: validatedData.email,
-        password: validatedData.password,
-        options: {
-          emailRedirectTo: redirectUrl,
-          data: {
-            full_name: validatedData.fullName,
-            phone: validatedData.phone,
-            employee_id: validatedData.employeeId,
-            aadhaar_number: `ADMIN${validatedData.employeeId}`,
-          }
+      // Call edge function to register admin with proper role assignment
+      const { data, error } = await supabase.functions.invoke('register-admin', {
+        body: {
+          email: validatedData.email,
+          password: validatedData.password,
+          fullName: validatedData.fullName,
+          phone: validatedData.phone,
+          employeeId: validatedData.employeeId,
         }
       });
 
       if (error) throw error;
 
-      if (data.user) {
-        const { error: roleError } = await supabase
-          .from('user_roles')
-          .insert({ user_id: data.user.id, role: 'admin' });
-
-        if (roleError) {
-          console.error("Role assignment error:", roleError);
-        }
-      }
-
       toast({
         title: "Admin account created!",
-        description: "Please check your email to verify your account.",
+        description: "You can now login with your credentials.",
       });
 
       navigate("/admin/login");
